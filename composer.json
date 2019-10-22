@@ -1,0 +1,10 @@
+{
+    "name": "samsung/compra",
+    "authors": [
+        {
+            "name": "Paulo Tiago Magalhães",
+            "email": "tiago2008.1@hotmail.com"
+        }
+    ],
+    "require": {}
+}
