@@ -1,1 +1,1 @@
-web: fornecedor/bin/heroku-php-apache2 fornecedor/
+web: node index.js
