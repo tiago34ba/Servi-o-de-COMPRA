@@ -1,140 +1,138 @@
-/ * lista globalarFornecedor Id, documento * /
-
-var Fornecedor  =  require ( ' ./model ' );
+var Produto = require('./model');
 
 
-var  cadastrarFornecedor   =  function ( req , res ) {
-    var Fornecedor  =  req . corpo ; // se não houver um analisador de corpo, não para capturar o json do cliente usando o '.body'
+var cadastrarProduto = function (req,res) {
+    var produto = req.body; // se não houver o body-parser, não dá para pegar o json do cliente usando o '.body'
 
-    console . log (req);
-    novo  Fornecedor  (Fornecedor ). save ( função ( erro , dados ) {
-        if (erro) {
-            res . estado ( 400 ). json ({
-                sucesso :  falso ,
-                mensagem :  " Erro ao cadastrar - "  +  erro . mensagem ,
-            }); // enviando o resultado para o Fornecedor 
-        } mais {
-            res . status ( 201 ). json ({
-                sucesso :  verdadeiro ,
-                mensagem :  " Fornecedor  cadastrado com sucesso. " ,
-		data : data
+    console.log(req);
+    new Produto(produto).save(function (error, data) {
+        if (error) {
+            res.status(400).json({
+                success: false,
+                message: "Erro ao cadastrar - " + error.message,
+            }); // enviando o resulato para o produto
+        } else {
+            res.status(201).json({
+                success: true,
+                message: "produto cadastrado com sucesso.",
+		data: data
 				});
         }
     });
 };
 
-var  listarFornecedor   =  função ( req , res ) {
-    Fornecedor  . find ( função ( erro , dados ) {
-        if (erro) {
-            res . estado ( 400 ). json ({
-                sucesso :  falso ,
-                mensagem :  erro . mensagem ,
+var listarProduto = function (req, res) {
+    Produto.find(function (error, data) {
+        if (error) {
+            res.status(400).json({
+                success: false,
+                message: error.message,
             });
-        } senão  se ( ! dados) {
-            res . status ( 404 ). json ({
-                sucesso :  falso ,
-                mensagem :  " Nenhum registro localizado. "
+        } else if (!data) {
+            res.status(404).json({
+                success: false,
+                message: "Nenhum registro localizado."
             });
-        } mais {
-            res . status ( 200 ). json ({
-                sucesso :  verdadeiro ,
-                mensagem :  " Ok - Dados acessíveis com sucesso. " ,
-                data : data
+        } else {
+            res.status(200).json({
+                success: true,
+                message: "Ok - Dados localizados com sucesso.",
+                data: data
             });
         }
     });
 };
 
-var  listarFornecedor PorId  =  função ( req , res ) {
-    Fornecedor  . findById ( req . params . id , função ( erro , dados ) {
-        if (erro) {
-            res . estado ( 400 ). json ({
-                sucesso :  falso ,
-                mensagem :  erro . mensagem ,
+var listarProdutoPorId = function (req, res) {
+    Produto.findById(req.params.id, function (error, data) {
+        if (error) {
+            res.status(400).json({
+                success: false,
+                message: error.message,
             });
-        } senão  se ( ! dados) {
-            res . status ( 404 ). json ({
-                sucesso :  falso ,
-                mensagem :  " Nenhum registro localizado. "
+        } else if (!data) {
+            res.status(404).json({
+                success: false,
+                message: "Nenhum registro localizado."
             });
-        } mais {
-            res . status ( 200 ). json ({
-                sucesso :  verdadeiro ,
-                mensagem :  " Ok " ,
-                data : data
+        } else {
+            res.status(200).json({
+                success: true,
+                message: "Ok",
+                data: data
             });
         }
     });
 }
 
-var  atualizarFornecedor   =  função ( req , res ) {
+var atualizarProduto = function (req, res) {
     var query = {
-        _id :  req . params . Eu iria
+        _id: req.params.id
     };
-    var Fornecedor  =  req . corpo ;
+    var produto = req.body;
 
-    Fornecedor  . findOneAndUpdate (consulta, Fornecedor , função ( erro , dados ) {
-        if (erro) {
-            res . estado ( 400 ). json ({
-                sucesso :  falso ,
-                mensagem :  " Erro ao atualizar - "  +  erro . mensagem ,
+    Produto.findOneAndUpdate(query, produto, function (error, data) {
+        if (error) {
+            res.status(400).json({
+                success: false,
+                message: "Erro ao atualizar - " + error.message,
             });
-        } mais {
-            res . status ( 200 ). json ({
-                sucesso :  verdadeiro ,
-                mensagem :  " Fornecedor  atualizado com sucesso. " ,
-                data : data
+        } else {
+            res.status(200).json({
+                success: true,
+                message: "produto atualizado com sucesso.",
+                data: data
             });
         }
     });
 };
 
-var  removFornecedor   =  function ( req , res ) {
+var removerProduto = function (req, res) {
     var query = {
-        _id :  req . params . Eu iria
+        _id: req.params.id
     };
 
-    Fornecedor  . findOneAndRemove (consulta, função ( erro , dados ) {
-        if (erro) {
-            res . estado ( 400 ). json ({
-                sucesso :  falso ,
-                mensagem :  " Erro ao remover - "  +  erro . mensagem ,
+    Produto.findOneAndRemove(query, function (error, data) {
+        if (error) {
+            res.status(400).json({
+                success: false,
+                message: "Erro ao remover - " + error.message,
             });
-        } mais {
-            res . status ( 200 ). json ({
-                sucesso :  verdadeiro ,
-                mensagem :  " Fornecedor  removido com sucesso. " ,
-                data : data
+        } else {
+            res.status(200).json({
+                success: true,
+                message: "produto removido com sucesso.",
+                data: data
             });
         }
     });
 };
 
 
-var  listaPorFornecedor   =  função ( req , res ) {
+var listaPorProduto = function (req, res) {
 
     var query = {
-        requerente :  req . params . requerente
+        requerente: req.params.requerente
     };
-    Fornecedor  . find (consulta, função ( erro , dados ) {
-        if (erro) {
-            res . estado ( 400 ). json ({
-                sucesso :  falso ,
-                mensagem :  " Erro ao buscar- "  +  erro . mensagem ,
+    produto.find(query, function (error, data) {
+        if (error) {
+            res.status(400).json({
+                success: false,
+                message: "Erro ao buscar- " + error.message,
             });
-        } mais {
-            res . status ( 200 ). json ({
-                sucesso :  verdadeiro ,
-                mensagem :  " sucesso. " ,
-                data : data
+        } else {
+            res.status(200).json({
+                success: true,
+                message: "sucesso.",
+                data: data
             });
         }
     });
 };
 
-exportações . cadastrarFornecedor   = cadastrarFornecedor ; // faz com que os outros arquivos "vejam" sejam
-exportações . listarFornecedor   = listarFornecedor ;
-exportações . listarFornecedor PorId  = listarFornecedor PorId;
-exportações . atualizarFornecedor   = atualizarFornecedor ;
-exportações . removedorFornecedor   = removedorFornecedor ;
-exportações . listaPorFornecedor   = listaPorFornecedor ;
+exports.cadastrarProduto = cadastrarProduto; // faz com que os outros arquivos "vejam" este
+exports.listarProduto = listarProduto;
+exports.listarProdutoPorId = listarProdutoPorId;
+exports.atualizarProduto = atualizarProduto;
+exports.removerProduto = removerProduto;
+exports.listaPorProduto = listaPorProduto;
